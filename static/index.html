@@ -5,32 +5,31 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>BurstOTP Fast</title>
 <style>
-:root{--bg:#0a0c14;--s1:#111420;--s2:#181c2e;--s3:#1e2340;--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.14);--text:#eef0ff;--muted:#6b7099;--accent:#7c6dfa;--accent2:#a78bfa;--green:#22d36e;--green-bg:rgba(34,211,110,0.1);--red:#f04747;--red-bg:rgba(240,71,71,0.1);--yellow:#f5a623;--yellow-bg:rgba(245,166,35,0.1);--blue:#38bdf8;--r:10px;--r-sm:7px;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root{--bg:#0a0c14;--s1:#111420;--s2:#181c2e;--s3:#1e2340;--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.14);--text:#eef0ff;--muted:#6b7099;--accent:#7c6dfa;--green:#22d36e;--green-bg:rgba(34,211,110,0.1);--red:#f04747;--red-bg:rgba(240,71,71,0.1);--yellow:#f5a623;--yellow-bg:rgba(245,166,35,0.1);--blue:#38bdf8;--r:10px;--r-sm:7px;box-sizing:border-box}
 *,*::before,*::after{box-sizing:inherit;margin:0;padding:0}
 html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px}
 .app{display:flex;flex-direction:column;min-height:100vh}
-.hdr{background:var(--s1);border-bottom:1px solid var(--border);padding:12px 16px;position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;align-items:center;gap:10px}
-.hdr-logo{width:30px;height:30px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.hdr{background:var(--s1);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;gap:10px}
+.hdr-logo{width:30px;height:30px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px}
 .hdr-title{font-weight:700;font-size:15px;flex:1}
 .chip{font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;border:1px solid}
 .chip-green{background:var(--green-bg);color:var(--green);border-color:rgba(34,211,110,0.25)}
 .chip-yellow{background:var(--yellow-bg);color:var(--yellow);border-color:rgba(245,166,35,0.25)}
+.chip-red{background:var(--red-bg);color:var(--red);border-color:rgba(240,71,71,0.25)}
 .main{flex:1;padding:14px;max-width:500px;margin:0 auto;width:100%;display:flex;flex-direction:column;gap:14px}
 .card{background:var(--s1);border:1px solid var(--border);border-radius:var(--r);padding:16px}
 .card-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:12px}
-input{background:var(--s2);border:1px solid var(--border2);border-radius:var(--r-sm);color:var(--text);font-size:13px;outline:none;transition:border-color .15s;width:100%;padding:9px 12px}
+input{background:var(--s2);border:1px solid var(--border2);border-radius:var(--r-sm);color:var(--text);font-size:13px;outline:none;width:100%;padding:9px 12px}
 input:focus{border-color:var(--accent)}
 input::placeholder{color:var(--muted);opacity:.6}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:none;border-radius:var(--r-sm);font-size:13px;font-weight:600;cursor:pointer;transition:opacity .15s,transform .1s;padding:10px 16px;white-space:nowrap}
-.btn:active{transform:scale(.97)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:none;border-radius:var(--r-sm);font-size:13px;font-weight:600;cursor:pointer;padding:10px 16px;white-space:nowrap}
 .btn:disabled{opacity:.4;cursor:not-allowed}
 .btn-primary{background:var(--accent);color:#fff}
 .btn-ghost{background:var(--s2);color:var(--text);border:1px solid var(--border2)}
 .btn-full{width:100%}
 .btn-danger{background:var(--red-bg);color:var(--red);border:1px solid rgba(240,71,71,.2)}
 .svc-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.svc-item{background:var(--s2);border:1px solid var(--border2);border-radius:var(--r-sm);padding:10px 12px;cursor:pointer;transition:all .15s;display:flex;flex-direction:column;gap:2px}
-.svc-item:hover{border-color:var(--accent)}
+.svc-item{background:var(--s2);border:1px solid var(--border2);border-radius:var(--r-sm);padding:10px 12px;cursor:pointer;display:flex;flex-direction:column;gap:2px}
 .svc-item.selected{border-color:var(--accent);background:rgba(124,109,250,.1)}
 .svc-name{font-size:13px;font-weight:500}
 .svc-price{font-size:11px;color:var(--accent);font-weight:600}
@@ -38,7 +37,7 @@ input::placeholder{color:var(--muted);opacity:.6}
 .slot{background:var(--s2);border:1px solid var(--border2);border-radius:var(--r-sm);padding:11px 13px;display:flex;align-items:flex-start;gap:10px;position:relative;overflow:hidden}
 .slot-num{font-family:monospace;font-size:14px;font-weight:700}
 .slot-otp{font-family:monospace;font-size:20px;font-weight:800;color:var(--green);letter-spacing:3px}
-.slot-bar{position:absolute;bottom:0;left:0;height:2px;background:var(--accent);transition:width .8s linear}
+.slot-bar{position:absolute;bottom:0;left:0;height:2px;background:var(--accent)}
 .badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;border:1px solid;white-space:nowrap}
 .b-checking{background:var(--yellow-bg);color:var(--yellow);border-color:rgba(245,166,35,.25)}
 .b-stale{background:var(--red-bg);color:var(--red);border-color:rgba(240,71,71,.25)}
@@ -47,8 +46,7 @@ input::placeholder{color:var(--muted);opacity:.6}
 .b-otp{background:var(--green-bg);color:var(--green);border-color:rgba(34,211,110,.35)}
 .b-cancel{background:var(--s3);color:var(--muted);border-color:var(--border2)}
 .b-error{background:var(--red-bg);color:var(--red);border-color:rgba(240,71,71,.25)}
-.copy-btn{background:var(--s3);border:none;border-radius:5px;color:var(--muted);cursor:pointer;padding:4px 8px;font-size:11px;font-weight:600;transition:all .15s;flex-shrink:0}
-.copy-btn:hover{color:var(--text)}
+.copy-btn{background:var(--s3);border:none;border-radius:5px;color:var(--muted);cursor:pointer;padding:4px 8px;font-size:11px;font-weight:600}
 .stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .stat{background:var(--s2);border-radius:var(--r-sm);padding:10px;text-align:center}
 .stat-val{font-size:18px;font-weight:700}
@@ -56,16 +54,16 @@ input::placeholder{color:var(--muted);opacity:.6}
 .count-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .count-row label{font-size:12px;color:var(--muted);white-space:nowrap}
 .count-btns{display:flex;gap:4px;flex-wrap:wrap}
-.count-btn{width:32px;height:32px;border:1px solid var(--border2);border-radius:6px;background:var(--s2);color:var(--text);font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.count-btn{width:32px;height:32px;border:1px solid var(--border2);border-radius:6px;background:var(--s2);color:var(--text);font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .count-btn.active{border-color:var(--accent);background:rgba(124,109,250,.15);color:var(--accent)}
 .search-wrap{position:relative}
 .search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:12px;pointer-events:none}
 .search-input{padding-left:28px}
-.log{background:var(--s2);border-radius:var(--r-sm);padding:10px 12px;font-family:monospace;font-size:11px;color:var(--muted);max-height:90px;overflow-y:auto;line-height:1.7}
+.log{background:var(--s2);border-radius:var(--r-sm);padding:10px 12px;font-family:monospace;font-size:11px;color:var(--muted);max-height:100px;overflow-y:auto;line-height:1.7;word-break:break-all}
 .log .ok{color:var(--green)}.log .err{color:var(--red)}.log .info{color:var(--blue)}
 .spin{width:12px;height:12px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:sp .6s linear infinite;display:inline-block;vertical-align:middle}
 @keyframes sp{to{transform:rotate(360deg)}}
-.toast{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%) translateY(60px);background:var(--s1);border:1px solid var(--border2);border-radius:var(--r);padding:10px 18px;font-size:13px;font-weight:500;z-index:100;transition:transform .2s;white-space:nowrap;pointer-events:none}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(60px);background:var(--s1);border:1px solid var(--border2);border-radius:var(--r);padding:10px 18px;font-size:13px;font-weight:500;z-index:100;transition:transform .2s;white-space:nowrap}
 .toast.show{transform:translateX(-50%) translateY(0)}
 .toast.ok{border-color:var(--green);color:var(--green)}
 .toast.err{border-color:var(--red);color:var(--red)}
@@ -131,23 +129,26 @@ input::placeholder{color:var(--muted);opacity:.6}
 </div>
 <div class="toast" id="toast"></div>
 <script>
+// Use relative URLs — works on any domain
+async function api(path, method='GET', body=null){
+  const opts={method,headers:{'Content-Type':'application/json','Accept':'application/json'}};
+  if(body) opts.body=JSON.stringify(body);
+  const r=await fetch(path,opts);
+  const text=await r.text();
+  let d;
+  try{d=JSON.parse(text)}catch(e){throw new Error('Bad response: '+text.slice(0,100))}
+  if(!r.ok) throw new Error(d.error||'Error '+r.status);
+  return d;
+}
+const burst=(ep,m,b)=>api('/burst'+ep,m,b);
+const speedz=(ep,m,b)=>api('/speedz'+ep,m,b);
+
 let allSvcs=[], selectedSvc=null, wantCount=1, slots=[], running=false;
 let totalFresh=0, totalOtp=0;
 
 function toast(msg,type='',dur=2800){const t=document.getElementById('toast');t.textContent=msg;t.className='toast show'+(type?' '+type:'');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),dur)}
 function log(msg,cls=''){const el=document.getElementById('log');const s=document.createElement('span');s.className=cls;s.textContent='\n'+msg;el.appendChild(s);el.scrollTop=el.scrollHeight}
 function clearLog(){document.getElementById('log').innerHTML=''}
-
-async function api(path, method='GET', body=null){
-  const opts={method,headers:{'Content-Type':'application/json'}};
-  if(body) opts.body=JSON.stringify(body);
-  const r=await fetch(path,opts);
-  const d=await r.json();
-  if(!r.ok) throw new Error(d.error||'Error '+r.status);
-  return d;
-}
-const burst=(ep,m,b)=>api('/burst'+ep,m,b);
-const speedz=(ep,m,b)=>api('/speedz'+ep,m,b);
 
 async function loadSvcs(){
   const grid=document.getElementById('svc-grid');
@@ -156,7 +157,7 @@ async function loadSvcs(){
     if(typeof data==='object'&&!Array.isArray(data)){
       const raw=data.services||data;
       allSvcs=Object.entries(raw).map(([name,price])=>({name,price:parseFloat(price)||0}));
-    } else {
+    }else{
       allSvcs=(Array.isArray(data)?data:[]).map(s=>typeof s==='object'?s:{name:s,price:0});
     }
     allSvcs.sort((a,b)=>a.name.localeCompare(b.name));
@@ -177,12 +178,7 @@ function renderSvcs(list){
     </div>`).join('');
 }
 function filterSvc(q){renderSvcs(allSvcs.filter(s=>s.name.toLowerCase().includes(q.toLowerCase())))}
-function selectSvc(name,price){
-  selectedSvc=name;
-  const q=document.querySelector('.search-input').value;
-  renderSvcs(allSvcs.filter(s=>!q||s.name.toLowerCase().includes(q.toLowerCase())));
-  log(`Selected: ${name} @ ₹${price}`,'info');
-}
+function selectSvc(name,price){selectedSvc=name;const q=document.querySelector('.search-input').value;renderSvcs(allSvcs.filter(s=>!q||s.name.toLowerCase().includes(q.toLowerCase())));log('Selected: '+name,'info')}
 function setCount(n){wantCount=n;document.querySelectorAll('.count-btn').forEach(b=>b.classList.toggle('active',parseInt(b.textContent)===n))}
 
 async function startBatch(){
@@ -194,70 +190,59 @@ async function startBatch(){
   document.getElementById('slots-card').style.display='block';
   document.getElementById('slots').innerHTML='';
   for(let i=0;i<wantCount;i++){
-    const id=Date.now()+i;
-    slots.push({id,status:'checking',number:null,otp:null,progressStart:null});
+    slots.push({id:Date.now()+i,status:'checking',number:null,otp:null,progressStart:null});
     renderSlot(slots[i],i);
   }
-  log(`⚡ Starting ${wantCount}× ${selectedSvc} in parallel…`,'info');
+  log('⚡ Starting '+wantCount+'× '+selectedSvc+'…','info');
   await Promise.all(slots.map((s,i)=>runSlot(s,i)));
-  running=false;
-  log('Batch complete ✓','ok');
-  refreshBalance();
+  running=false;log('Done ✓','ok');
+  try{const me=await burst('/api/v1/me');document.getElementById('st-balance').textContent='₹'+parseFloat(me.balance||0).toFixed(2)}catch{}
 }
 
 async function runSlot(slot,idx){
   try{
     updateSlot(idx,{status:'checking'});
-    log(`[${idx+1}] Checking freshness…`,'info');
+    log('['+（idx+1)+'] Checking freshness…','info');
     let fresh=false;
     try{
       const ck=await speedz('/api/v1/check','POST',{service:selectedSvc});
       fresh=ck.fresh===true||ck.status==='fresh'||ck.available===true||ck.is_fresh===true||ck.result==='fresh';
-      log(`[${idx+1}] Speedz → ${fresh?'✓ FRESH':'✗ STALE'}`,'info');
-    }catch(e){
-      log(`[${idx+1}] Checker unavailable — proceeding`,'err');
-      fresh=true;
-    }
-    if(!fresh){updateSlot(idx,{status:'stale'});log(`[${idx+1}] Stale — skipped`,'err');return}
+      log('['+(idx+1)+'] Speedz → '+(fresh?'✓ FRESH':'✗ STALE'),'info');
+    }catch(e){log('['+(idx+1)+'] Checker skip: '+e.message,'err');fresh=true}
+    if(!fresh){updateSlot(idx,{status:'stale'});log('['+(idx+1)+'] Stale — skipped','err');return}
     totalFresh++;document.getElementById('st-fresh').textContent=totalFresh;
     updateSlot(idx,{status:'ordering'});
-    log(`[${idx+1}] Fresh! Ordering…`,'info');
     let od;
     try{od=await burst('/api/v1/order','POST',{service:selectedSvc})}
-    catch(e){updateSlot(idx,{status:'error'});log(`[${idx+1}] Order failed: ${e.message}`,'err');return}
+    catch(e){updateSlot(idx,{status:'error'});log('['+(idx+1)+'] Order failed: '+e.message,'err');return}
     const number=od.number||od.phone||od.num||'—';
     slot.number=number;
     updateSlot(idx,{status:'waiting',number,progressStart:Date.now()});
-    log(`[${idx+1}] Got: ${number} — waiting OTP…`,'ok');
+    log('['+(idx+1)+'] Got: '+number+' — waiting OTP…','ok');
     await pollOtp(slot,idx);
-  }catch(e){updateSlot(idx,{status:'error'});log(`[${idx+1}] Fatal: ${e.message}`,'err')}
+  }catch(e){updateSlot(idx,{status:'error'});log('['+(idx+1)+'] Fatal: '+e.message,'err')}
 }
 
 async function pollOtp(slot,idx){
   const deadline=Date.now()+120000;
   while(Date.now()<deadline){
-    if(slots[idx].status==='cancelled'){return}
+    if(slots[idx].status==='cancelled')return;
     try{
-      const inbox=await burst(`/api/v1/inbox?number=${encodeURIComponent(slot.number)}`);
+      const inbox=await burst('/api/v1/inbox?number='+encodeURIComponent(slot.number));
       const msgs=inbox.messages||inbox.sms||inbox.inbox||(Array.isArray(inbox)?inbox:[]);
       if(msgs.length>0){
         const txt=msgs[0].text||msgs[0].message||msgs[0].body||'';
         const m=txt.match(/\b\d{4,8}\b/);
         const otp=m?m[0]:txt;
-        slot.otp=otp;
-        updateSlot(idx,{status:'otp',otp});
+        slot.otp=otp;updateSlot(idx,{status:'otp',otp});
         totalOtp++;document.getElementById('st-otp').textContent=totalOtp;
-        log(`[${idx+1}] OTP: ${otp} ✓`,'ok');
-        toast(`OTP: ${otp}`,'ok');return;
+        log('['+(idx+1)+'] OTP: '+otp+' ✓','ok');toast('OTP: '+otp,'ok');return;
       }
     }catch(e){}
-    await sleep(4000);
+    await new Promise(r=>setTimeout(r,4000));
   }
-  updateSlot(idx,{status:'error'});
-  log(`[${idx+1}] Timeout — no OTP`,'err');
+  updateSlot(idx,{status:'error'});log('['+(idx+1)+'] Timeout','err');
 }
-
-function sleep(ms){return new Promise(r=>setTimeout(r,ms))}
 
 async function cancelAll(){
   for(let i=0;i<slots.length;i++){
@@ -275,7 +260,7 @@ function renderSlot(slot,idx){
   const container=document.getElementById('slots');
   let el=document.getElementById('slot-'+slot.id);
   if(!el){el=document.createElement('div');el.id='slot-'+slot.id;el.className='slot';container.appendChild(el)}
-  const s=slot.status,num=slot.number||`Slot ${idx+1}`;
+  const s=slot.status,num=slot.number||'Slot '+(idx+1);
   let badge='',extra='',bar='';
   if(s==='checking')badge='<span class="badge b-checking"><div class="spin" style="width:8px;height:8px;border-width:1.5px"></div> Checking</span>';
   else if(s==='stale')badge='<span class="badge b-stale">✗ Stale</span>';
@@ -283,27 +268,22 @@ function renderSlot(slot,idx){
   else if(s==='waiting'){
     badge='<span class="badge b-waiting"><div class="pdot"></div>Waiting OTP</span>';
     const pct=slot.progressStart?Math.min((Date.now()-slot.progressStart)/120000*100,100).toFixed(1):0;
-    bar=`<div class="slot-bar" id="bar-${slot.id}" style="width:${pct}%"></div>`;
+    bar='<div class="slot-bar" id="bar-'+slot.id+'" style="width:'+pct+'%"></div>';
     clearInterval(slot._barInt);
-    slot._barInt=setInterval(()=>{const b=document.getElementById('bar-'+slot.id);if(!b){clearInterval(slot._barInt);return}const p=Math.min((Date.now()-slot.progressStart)/120000*100,100);b.style.width=p.toFixed(1)+'%';if(p>=100)clearInterval(slot._barInt)},1000);
-    extra=`<button class="btn btn-ghost" style="padding:5px 9px;font-size:11px;flex-shrink:0" onclick="cancelSlot(${idx})">✕</button>`;
+    slot._barInt=setInterval(()=>{const b=document.getElementById('bar-'+slot.id);if(!b){clearInterval(slot._barInt);return}b.style.width=Math.min((Date.now()-slot.progressStart)/120000*100,100).toFixed(1)+'%'},1000);
+    extra='<button class="btn btn-ghost" style="padding:5px 9px;font-size:11px;flex-shrink:0" onclick="cancelSlot('+idx+')">✕</button>';
   }
-  else if(s==='otp'){
-    badge='<span class="badge b-otp">✓ OTP ready</span>';
-    extra=`<div style="display:flex;align-items:center;gap:8px;margin-top:6px"><span class="slot-otp">${slot.otp}</span><button class="copy-btn" onclick="copyText('${slot.otp}',this)">Copy</button></div>`;
-  }
+  else if(s==='otp'){badge='<span class="badge b-otp">✓ OTP ready</span>';extra='<div style="display:flex;align-items:center;gap:8px;margin-top:6px"><span class="slot-otp">'+slot.otp+'</span><button class="copy-btn" onclick="copyText(\''+slot.otp+'\',this)">Copy</button></div>'}
   else if(s==='cancelled')badge='<span class="badge b-cancel">Cancelled</span>';
   else if(s==='error')badge='<span class="badge b-error">✗ Error</span>';
-
   if(s==='waiting'){
-    el.innerHTML=`<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:5px"><div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap"><span class="slot-num">${num}</span>${badge}</div></div>${extra}${bar}`;
+    el.innerHTML='<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:5px"><div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap"><span class="slot-num">'+num+'</span>'+badge+'</div></div>'+extra+bar;
   }else{
-    el.innerHTML=`<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:5px"><div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap"><span class="slot-num">${num}</span>${badge}</div>${s==='otp'?extra:''}</div>`;
+    el.innerHTML='<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:5px"><div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap"><span class="slot-num">'+num+'</span>'+badge+'</div>'+(s==='otp'?extra:'')+'</div>';
   }
 }
-function cancelSlot(idx){const s=slots[idx];if(!s)return;clearInterval(s._barInt);s.status='cancelled';updateSlot(idx,{status:'cancelled'});if(s.number)burst('/api/v1/cancel','POST',{number:s.number}).catch(()=>{});log(`[${idx+1}] Cancelled`,'err')}
+function cancelSlot(idx){const s=slots[idx];if(!s)return;clearInterval(s._barInt);s.status='cancelled';updateSlot(idx,{status:'cancelled'});if(s.number)burst('/api/v1/cancel','POST',{number:s.number}).catch(()=>{});log('['+(idx+1)+'] Cancelled','err')}
 function copyText(text,btn){navigator.clipboard.writeText(text).then(()=>{const o=btn.textContent;btn.textContent='✓';btn.style.color='var(--green)';setTimeout(()=>{btn.textContent=o;btn.style.color=''},1500)})}
-async function refreshBalance(){try{const me=await burst('/api/v1/me');document.getElementById('st-balance').textContent='₹'+parseFloat(me.balance||me.credits||0).toFixed(2)}catch{}}
 
 (async function init(){
   try{
@@ -314,7 +294,8 @@ async function refreshBalance(){try{const me=await burst('/api/v1/me');document.
     log('Connected ✓','ok');
     await loadSvcs();
   }catch(e){
-    document.getElementById('hdr-status').textContent='● Error';
+    document.getElementById('hdr-status').textContent='● Error: '+e.message.slice(0,30);
+    document.getElementById('hdr-status').className='chip chip-red';
     log('Failed: '+e.message,'err');
   }
 })();
