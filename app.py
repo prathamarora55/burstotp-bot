@@ -3,57 +3,41 @@ import requests, os
 
 app = Flask(__name__, static_folder='static')
 
-BURST_KEY   = 'AK_f0573508039744f7b5ccd522afbb369f'
-SPEEDZ_KEY  = 'AK_MhaEcEVHiKYyBEvyy-wW7yWwn8YVNeub'
+BURST_KEY  = 'AK_f0573508039744f7b5ccd522afbb369f'
+SPEEDZ_KEY = 'AK_MhaEcEVHiKYyBEvyy-wW7yWwn8YVNeub'
 BURST_BASE  = 'http://burstotpapi.qd.je:8080'
 SPEEDZ_BASE = 'https://tubesave.in'
-WORKER_URL  = 'https://raspy-glade-355a.pratham-arora55.workers.dev'
 
-def proxy_via_worker(base, key, path, method, body=None, params=None):
-    target = base + path
-    if params:
-        qs = '&'.join(f'{k}={v}' for k,v in params.items())
-        target += ('&' if '?' in target else '?') + qs
+def proxy(base, key, path, method, body=None, params=None):
+    url = base + path
+    headers = {'X-API-Key': key, 'Content-Type': 'application/json'}
     try:
-        opts = {
-            'method': method,
-            'headers': {'X-API-Key': key, 'Content-Type': 'application/json'},
-            'timeout': 30
-        }
-        if body and method == 'POST':
-            opts['json'] = body
-        r = requests.request(
-            method,
-            WORKER_URL,
-            params={'target': target},
-            headers={'X-API-Key': key, 'Content-Type': 'application/json'},
-            json=body if method == 'POST' else None,
-            timeout=30
-        )
+        if method == 'GET':
+            r = requests.get(url, headers=headers, params=params, timeout=30)
+        else:
+            r = requests.post(url, headers=headers, json=body, timeout=30)
         try:
             return jsonify(r.json()), r.status_code
         except:
             return jsonify({'raw': r.text}), r.status_code
     except requests.exceptions.Timeout:
-        return jsonify({'error': 'Timeout'}), 504
+        return jsonify({'error': 'timeout'}), 504
     except Exception as e:
         return jsonify({'error': str(e)}), 502
 
 @app.route('/burst/<path:path>', methods=['GET','POST'])
 def burst(path):
-    body = request.get_json(silent=True)
-    params = request.args.to_dict()
-    return proxy_via_worker(BURST_BASE, BURST_KEY, '/'+path, request.method, body, params)
+    return proxy(BURST_BASE, BURST_KEY, '/'+path, request.method,
+                 request.get_json(silent=True), request.args.to_dict())
 
 @app.route('/speedz/<path:path>', methods=['GET','POST'])
 def speedz(path):
-    body = request.get_json(silent=True)
-    return proxy_via_worker(SPEEDZ_BASE, SPEEDZ_KEY, '/'+path, request.method, body)
+    return proxy(SPEEDZ_BASE, SPEEDZ_KEY, '/'+path, request.method,
+                 request.get_json(silent=True))
 
 @app.route('/')
 def index():
     return send_from_directory('static', 'index.html')
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 8080))
-    app.run(host='0.0.0.0', port=port)
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
